@@ -3,9 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 const nodemailer = require('nodemailer'); // Add this line
-
+const uuid = require('uuid');
 // Utility function for validation
 const validateUserInput = (fields) => {
     return fields.every(field => field);
@@ -26,6 +25,9 @@ const authenticateToken = (req, res, next) => {
 
 // Signup Route
 router.post('/signup', async (req, res) => {
+    // console.log("hey i'm on signup..",req.body)
+
+    // console.log(req.body)
     const { name, email, password, mobileNumber, age, province, profilePicture } = req.body;
 
     // Validate input
@@ -33,21 +35,24 @@ router.post('/signup', async (req, res) => {
         return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
+
     try {
         const existingUserByEmail = await User.findOne({ email });
         const existingUserByMobile = await User.findOne({ mobileNumber }); // Check for existing mobile number
 
         if (existingUserByEmail) {
+          //  console.log("email inside if.")
             return res.status(400).json({ message: 'User already exists with this email' });
         }
 
         if (existingUserByMobile) {
+            // console.log("phone inside if.")
             return res.status(400).json({ message: 'Mobile number already in use' }); // Handle existing mobile number case
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
-            userId: uuidv4(),
+            userId: uuid.v4(),
             name,
             email,
             password: hashedPassword,
@@ -56,16 +61,11 @@ router.post('/signup', async (req, res) => {
             province,
             profilePicture
         });
-        await newUser.save();
+        const savedUser = await newUser.save();
 
         res.status(201).json({ 
             message: 'User created successfully', 
-            user: { 
-                id: newUser._id, 
-                name: newUser.name, 
-                email: newUser.email, 
-                mobileNumber: newUser.mobileNumber 
-            } 
+            user: savedUser 
         });
     } catch (error) {
         console.error(error);
@@ -238,21 +238,11 @@ router.get('/user/:id', async (req, res) => {
         }
 
         // Return user information excluding the password
-        res.status(200).json({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            mobileNumber: user.mobileNumber,
-            age: user.age,
-            province: user.province,
-            profilePicture: user.profilePicture,
-        });
+        res.status(200).json({user});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 });
-
-
 
 module.exports = router;
