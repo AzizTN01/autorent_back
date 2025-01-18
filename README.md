@@ -4,6 +4,8 @@
 
 AUTORENT is a backend application designed for managing car rentals. It provides RESTful APIs for user authentication, company management, and car rental functionalities. Built with Node.js, Express, and MongoDB, this application aims to facilitate a seamless experience for users looking to rent cars from various companies.
 
+**Note:** Some of the features listed below are still in development.
+
 ## Features
 
 - User authentication (signup, login, password reset)
@@ -41,22 +43,29 @@ AUTORENT is a backend application designed for managing car rentals. It provides
 
  ## API Endpoints
 
-POST /api/auth/signup - Register a new user
-POST /api/auth/login - Log in a user
-POST /api/auth/forgot-password - Request a password reset
-POST /api/auth/reset-password/:token - Reset user password
+1. POST /api/auth/signup - Register a new user
+2. POST /api/auth/login - Log in a user
+3. POST /api/auth/forgot-password - Request a password reset
+4. POST /api/auth/reset-password/:token - Reset user password
 
 ## Companies
-POST /api/auth/companies - Create a new company
-GET /api/auth/companies/:companyId - Get company details
-PUT /api/auth/companies/:companyId - Update company details
-DELETE /api/auth/companies/:companyId - Delete a company
-POST /api/auth/companies/:companyId/cars - Add a car to a company
+1. POST /api/auth/companies - Create a new company
+2. GET /api/auth/companies/:companyId - Get company details
+3. PUT /api/auth/companies/:companyId - Update company details
+4. DELETE /api/auth/companies/:companyId - Delete a company
+5. POST /api/auth/companies/:companyId/cars - Add a car to a company
 
 ##Cars
-GET /api/auth/cars/:carId - Get car details
-PUT /api/auth/cars/:carId - Update car details
-DELETE /api/auth/cars/:carId - Delete a car
+1. GET /api/auth/cars/:carId - Get car details
+2. PUT /api/auth/cars/:carId - Update car details
+3. DELETE /api/auth/cars/:carId - Delete a car
 
 ## Testing
 You can use tools like Postman or Insomnia to test the API endpoints. Make sure to include the necessary headers, such as Content-Type: application/json and Authorization: Bearer <token> for protected routes.
+
+
+### Notes:
+- Replace `yourusername` in the clone URL with your actual GitHub username.
+- Update the `.env` section with your actual MongoDB connection string and JWT secret.
+- You can add more details or sections as needed, such as a "Future Improvements" section or "Known Issues."
+
