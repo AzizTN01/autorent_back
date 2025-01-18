@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
         enum: ['Sousse', 'Sfax', 'Monastir', 'Tunis', 'Ariana', 'Ben Arous', 'Manouba', 'Nabeul', 'Bizerte', 'Beja', 'Jendouba', 'Kef', 'Siliana', 'Kairouan', 'Kasserine', 'Sidi Bouzid', 'Gabes', 'Medenine', 'Tataouine', 'Gafsa', 'Tozeur', 'Kebili', 'Mahdia', 'Zaghouan'],
         required: false 
     },
+    rentals: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Rental' 
+    }],
     profilePicture: { type: String, required: false,default:null },
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
