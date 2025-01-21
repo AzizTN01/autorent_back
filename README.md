@@ -55,7 +55,7 @@ AUTORENT is a backend application designed for managing car rentals. It provides
 4. DELETE /api/auth/companies/:companyId - Delete a company
 5. POST /api/auth/companies/:companyId/cars - Add a car to a company
 
-##Cars
+## Cars
 1. GET /api/auth/cars/:carId - Get car details
 2. PUT /api/auth/cars/:carId - Update car details
 3. DELETE /api/auth/cars/:carId - Delete a car
