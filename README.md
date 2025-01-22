@@ -10,7 +10,7 @@ AUTORENT is a backend application designed for managing car rentals. It provides
 
 - User authentication (signup, login, password reset)
 - Company management (create, update, delete companies)
-- Car management (add, update, delete cars)
+- Car management (add, update, delete cars,upload pictures)
 - Rental management (create rentals)
 - Secure API endpoints with JWT authentication
 - MongoDB for data storage
@@ -57,8 +57,10 @@ AUTORENT is a backend application designed for managing car rentals. It provides
 
 ## Cars
 1. GET /api/auth/cars/:carId - Get car details
-2. PUT /api/auth/cars/:carId - Update car details
-3. DELETE /api/auth/cars/:carId - Delete a car
+2. GET /api/auth/cars - Get all car details
+3. POST /companies/:companyId/cars - Add car to company
+4. PUT /api/auth/cars/:carId - Update car details
+5. DELETE /api/auth/cars/:carId - Delete a car
 
 ## Testing
 You can use tools like Postman or Insomnia to test the API endpoints. Make sure to include the necessary headers, such as Content-Type: application/json and Authorization: Bearer <token> for protected routes.
