@@ -6,10 +6,13 @@ const carSchema = new mongoose.Schema({
         ref: 'Company',  // Reference to the Company model
         required: true   // Make the company field required 
       },
-    
+      image: {
+        type: String, // Store the path to the image
+        required: false, // Optional, depending on your requirements
+    },
   brand: {
     type: String,
-    enum: ['Toyota', 'Honda', 'Ford', 'Chevrolet', 'Nissan', 'BMW', 'Mercedes', 'Audi', 'Hyundai', 'Kia'],
+    enum: ['Toyota','Volwagen', 'Honda', 'Ford', 'Chevrolet', 'Nissan', 'BMW', 'Mercedes', 'Audi', 'Hyundai', 'Kia'],
     required: true,
   },
   model: {
@@ -67,3 +70,5 @@ const carSchema = new mongoose.Schema({
 const Car = mongoose.model('Car', carSchema);
 
 module.exports = Car;
+
+

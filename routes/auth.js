@@ -1,11 +1,10 @@
-
 const express = require('express');
 const router = express.Router();
 const authController = require('../Controllers/authController');
 const companyController = require('../Controllers/companyController');
 const rentalController = require('../Controllers/rentalController');
 const carController = require('../Controllers/carController');
-
+const multer = require('multer');
 
 // Middleware to authenticate token (if needed)
 const authenticateToken = (req, res, next) => {
@@ -19,6 +18,18 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
+// Set up multer for file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/'); // Specify the directory to save the uploaded files
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname); // Use a unique filename
+    }
+});
+
+const upload = multer({ storage: storage });
+
 // Routes
 
 router.post('/rentals', rentalController.createRental);
@@ -31,9 +42,12 @@ router.get('/getusers', authController.getUsers);
 router.delete('/delete-user', authController.deleteUser); 
 router.get('/user/:id', authController.getUser); 
 router.post('/companies', companyController.createCompany);
-router.post('/companies/:companyId/cars', companyController.addCarToCompany);
+router.post('/:carId/companies/:companyId', carController.addCarToCompany);
 router.put('/cars/:carId', carController.updateCarDetails); 
 router.get('/companies/:companyId/cars', carController.getCarsByCompany);
 router.get('/cars/:carId', carController.getCarDetails); 
+router.get('/cars', carController.getAllCars);
+router.post('/companies/:companyId/cars', upload.single('carImage'), carController.addCarToCompany);
+router.post('/cars/image', carController.getCarImageById);
 
 module.exports = router;

@@ -23,34 +23,4 @@ exports.createCompany = async (req, res) => {
 
 // ... other controller functions (createCompany) 
 
-exports.addCarToCompany = async (req, res) => {
-  const { companyId } = req.params; // Get the company ID from the URL parameters
-  const carData = req.body;         // Get the car data from the request body 
 
-  try {
-
-    carData.company = companyId; 
-    // Create the new car
-    const newCar = await Car.create(carData); 
-    
-    // Find the company and update its 'cars' array
-    const updatedCompany = await Company.findByIdAndUpdate(
-      companyId,
-      { $push: { cars: newCar._id } }, // Push the new car's ID to the company's 'cars' array
-      { new: true } // Return the updated company document
-    ).populate('cars'); // Populate the 'cars' array with car data
-
-    if (!updatedCompany) {
-      return res.status(404).json({ message: 'Company not found' });
-    }
-
-    res.status(201).json({ 
-      message: 'Car added to company successfully', 
-      company: updatedCompany 
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to add car to company' });
-  }
-};
