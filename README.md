@@ -30,7 +30,7 @@ AUTORENT is a backend application designed for managing car rentals. It provides
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/autorent-backend.git
+   git clone https://github.com/AzizTN01/autorent-backend.git
    cd autorent-backend
 2. Install dependencies:
    npm install
