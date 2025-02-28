@@ -1,4 +1,3 @@
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -79,7 +78,8 @@ exports.login = async (req, res) => {
 };
 
 exports.updateProfile = async (req, res) => {
-    const { userId, name, age, province, profilePicture } = req.body;
+    const { userId, name, age, province } = req.body;
+    const profilePicture = req.file ? req.file.path : null; // Get the file path if uploaded
 
     try {
         const user = await User.findById(userId);
@@ -89,8 +89,12 @@ exports.updateProfile = async (req, res) => {
 
         if (name) user.name = name;
         if (age !== undefined) user.age = age; 
-        if (province) user.province = province; 
-        if (profilePicture) user.profilePicture = profilePicture;
+        if (province) {
+            user.province = province; 
+        } else {
+            return res.status(400).json({ message: 'Province not found' });
+        }
+        if (profilePicture) user.profilePicture = profilePicture; // Update profile picture path
 
         await user.save();
         res.status(200).json({ message: 'Profile updated successfully', user });

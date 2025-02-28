@@ -5,6 +5,7 @@ const companyController = require('../Controllers/companyController');
 const rentalController = require('../Controllers/rentalController');
 const carController = require('../Controllers/carController');
 const multer = require('multer');
+const upload = require('../middleware/upload');
 
 // Middleware to authenticate token (if needed)
 const authenticateToken = (req, res, next) => {
@@ -28,14 +29,14 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
+const uploadMulter = multer({ storage: storage });
 
 // Routes
 
 router.post('/rentals', rentalController.createRental);
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.put('/update-profile', authController.updateProfile); // Assuming you are protecting this route
+router.put('/update-profile', upload, authController.updateProfile);
 router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password/:token', authController.resetPassword);
 router.get('/getusers', authController.getUsers);
@@ -47,7 +48,7 @@ router.put('/cars/:carId', carController.updateCarDetails);
 router.get('/companies/:companyId/cars', carController.getCarsByCompany);
 router.get('/cars/:carId', carController.getCarDetails); 
 router.get('/cars', carController.getAllCars);
-router.post('/companies/:companyId/cars', upload.single('carImage'), carController.addCarToCompany);
+router.post('/companies/:companyId/cars', uploadMulter.single('carImage'), carController.addCarToCompany);
 router.post('/cars/image', carController.getCarImageById);
 
 module.exports = router;
