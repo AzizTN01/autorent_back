@@ -41,7 +41,8 @@ router.post('/forgot-password', authController.forgotPassword);
 router.post('/reset-password/:token', authController.resetPassword);
 router.get('/getusers', authController.getUsers);
 router.delete('/delete-user', authController.deleteUser); 
-router.get('/user/:id', authController.getUser); 
+// Update this line
+router.get('/user/:id', authController.getUser); // Remove authenticate middleware
 router.post('/companies', companyController.createCompany);
 router.post('/:carId/companies/:companyId', carController.addCarToCompany);
 router.put('/cars/:carId', carController.updateCarDetails); 
