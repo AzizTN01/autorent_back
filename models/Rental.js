@@ -51,6 +51,13 @@ const rentalSchema = new mongoose.Schema({
   }
 });
 
+// Indexes for performance
+rentalSchema.index({ user: 1 });
+rentalSchema.index({ car: 1 });
+rentalSchema.index({ status: 1 });
+rentalSchema.index({ rentalStartDate: 1, rentalEndDate: 1 });
+rentalSchema.index({ createdAt: -1 });
+
 // Middleware to update `updatedAt` before saving
 rentalSchema.pre('save', function (next) {
   this.updatedAt = Date.now();

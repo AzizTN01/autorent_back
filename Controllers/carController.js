@@ -80,9 +80,11 @@ exports.getCarsByCompany = asyncHandler(async (req, res) => {
     throw error;
   }
 
+  const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5001}`;
+  
   const carsWithImages = company.cars.map(car => ({
     ...car.toObject(),
-    image: `http://localhost:5001/uploads/${car.image}`
+    image: car.image ? `${baseUrl}/uploads/${car.image}` : null
   }));
 
   res.status(200).json({
@@ -102,7 +104,8 @@ exports.getCarDetails = asyncHandler(async (req, res) => {
     throw error;
   }
 
-  const imageUrl = `http://localhost:5001/uploads/${car.image}`;
+  const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5001}`;
+  const imageUrl = car.image ? `${baseUrl}/uploads/${car.image}` : null;
 
   res.status(200).json({
     ...car.toObject(),
@@ -136,7 +139,8 @@ exports.getCarImageById = asyncHandler(async (req, res) => {
     throw error;
   }
 
-  const imageUrl = `http://localhost:5001/uploads/${car.image}`;
+  const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5001}`;
+  const imageUrl = car.image ? `${baseUrl}/uploads/${car.image}` : null;
 
   res.status(200).json({
     image: imageUrl
