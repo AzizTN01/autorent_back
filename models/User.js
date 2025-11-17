@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
     profilePicture: { type: String, required: false,default:null },
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
-});
+}, { timestamps: true });
+
+// Additional indexes for performance (non-unique fields)
+userSchema.index({ mobileNumber: 1 });
+userSchema.index({ resetPasswordToken: 1 });
 
 const User = mongoose.model('User', userSchema);
 

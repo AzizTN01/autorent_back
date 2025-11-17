@@ -48,6 +48,10 @@ const companySchema = new mongoose.Schema({
   }
 });
 
+// Additional indexes for performance (non-unique fields)
+companySchema.index({ baseProvince: 1 });
+companySchema.index({ createdAt: -1 });
+
 // Middleware to update updatedAt before saving
 companySchema.pre('save', function (next) {
   this.updatedAt = Date.now();

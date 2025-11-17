@@ -448,6 +448,10 @@ exports.deleteUser = async (req, res) => {
         return res.status(400).json({ message: 'User ID is required' });
       }
   
+    // Validate id format (assuming MongoDB ObjectId)
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: 'Invalid user ID format' });
+    }
 
     // Authorization check (admin only or self-deletion)
     if (req.user.userId !== id && req.user.role !== 'admin') {

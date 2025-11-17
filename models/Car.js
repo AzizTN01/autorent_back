@@ -67,6 +67,13 @@ const carSchema = new mongoose.Schema({
   },
 });
 
+// Indexes for performance
+carSchema.index({ company: 1 });
+carSchema.index({ brand: 1 });
+carSchema.index({ isAvailable: 1 });
+carSchema.index({ price: 1 });
+carSchema.index({ createdAt: -1 });
+
 const Car = mongoose.model('Car', carSchema);
 
 module.exports = Car;
